@@ -1,0 +1,55 @@
+<div class="container-fluid px-5" style="margin-top: 70px;" ng-if="prediction">
+    <h3>Diabete Predictions</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Height</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Blood Type</th>
+                <th scope="col">Temperature</th>
+                <th scope="col">Heart Rate</th>
+                <th scope="col">Blood Pressure</th>
+                <th scope="col">Cholesterol</th>
+                <th scope="col">Smoking</th>
+                <th scope="col">DateNais</th>
+                <th scope="col">Prediction</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="prediction">
+
+            <tr *ngFor="let predd of prediction.diab; let i = index">
+                <th scope=" row">{{i+1}}</th>
+                <td>{{ predd.Gender }}</td>
+                <td>{{ predd.Height }}</td>
+                <td>{{ predd.Weight }}</td>
+                <td>{{ predd.Blood_Type }}</td>
+                <td>{{ predd.Temperature }}</td>
+                <td>{{ predd.Heart_Rate }}</td>
+                <td>{{ predd.Blood_Pressure }}</td>
+                <td>{{ predd.Cholesterol }}</td>
+                <td>{{ predd.Smoking }}</td>
+                <td>{{ predd.DateNais }}</td>
+                <td *ngIf="predd.prediction==1">NO</td>
+                <td *ngIf="predd.prediction==0">YES</td>
+            </tr>
+
+
+            <!-- <tr>
+                <th scope="row">1</th>
+                <td>{{ prediction.diab.Gender }}</td>
+                <td>{{ prediction.diab.Height }}</td>
+                <td>{{ prediction.diab.Weight }}</td>
+                <td>{{ prediction.diab.Blood_Type }}</td>
+                <td>{{ prediction.diab.Temperature }}</td>
+                <td>{{ prediction.diab.Heart_Rate }}</td>
+                <td>{{ prediction.diab.Blood_Pressure }}</td>
+                <td>{{ prediction.diab.Cholesterol }}</td>
+                <td>{{ prediction.diab.Smoking }}</td>
+                <td>{{ prediction.diab.DateNais }}</td>
+                <td>{{ prediction.predictions }}</td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,165 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="">MlOps</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal2">Make Prediction <span
+              class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Upload CSV</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            Dropdown link
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+
+</nav>
+<router-outlet></router-outlet>
+
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload CSV</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (submit)="onSubmit()">
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+          <input type="file" (change)="onFileSelected($event)" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" data-backdrop="static"
+  data-keyboard="false">
+
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #pre="ngForm" (ngSubmit)="getPred(pre.value)">
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Gender">Gender</label>
+                  <select class="form-control" ngModel name="Gender" id="Gender">
+                    <option value="Male">Homme</option>
+                    <option value="Female">Femme</option>
+                    <option value="Autres">Autres</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Height">Height</label>
+                  <input type="number" ngModel class="form-control" name="Height" id="Height">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Height">Weight</label>
+                  <input type="number" ngModel class="form-control" name="Weight" id="Weight">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="DateNais">Date Nais</label>
+                  <input type="date" ngModel class="form-control" name="DateNais" id="DateNais">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Blood_Type">Blood Type</label>
+                  <select class="form-control" ngModel name="Blood_Type" id="Blood_Type">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Temperature">Temperature</label>
+                  <input type="number" ngModel name="Temperature" class="form-control" id="Temperature">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Heart_Rate">Heart_Rate</label>
+                  <input type="number" ngModel name="Heart_Rate" class="form-control" id="Heart_Rate">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Blood_Pressure">Blood_Pressure</label>
+                  <input type="number" ngModel name="Blood_Pressure" class="form-control" id="Blood_Pressure">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Cholesterol">Cholesterol</label>
+                  <input type="number" ngModel name="Cholesterol" class="form-control" id="Cholesterol">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Smoking">Smoking</label>
+                  <select class="form-control" ngModel name="Smoking" name="Smoking" id="Smoking">
+                    <option value="Yes">OUI</option>
+                    <option value="No">NON</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
