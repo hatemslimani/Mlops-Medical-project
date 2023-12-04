@@ -60,7 +60,7 @@ def predict(data:Item):
     return {'diab':data.dict() , 'prediction':predictions.tolist()}
 @app.post("/predict/csv")
 def return_predictions(file: UploadFile = File(...)):
-    data = pd.read_json(file.file)
+    data = pd.read_csv(file.file)
     preprocessed_data = clean_data(data)
     predictions = modelDiabet.predict(preprocessed_data)
     data['prediction']=predictions
