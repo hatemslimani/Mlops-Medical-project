@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CardioComponent } from './cardio/cardio.component';
 import { PredictionComponent } from './prediction/prediction.component';
+import { SinglepredictionComponent } from './singleprediction/singleprediction.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, CardioComponent, PredictionComponent],
+  declarations: [AppComponent, HomeComponent, CardioComponent, PredictionComponent, SinglepredictionComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

@@ -55,20 +55,16 @@ def read_root():
 @app.post("/predict")
 def predict(data:Item):
     preprocessed_data = clean_data_json(data)
-    print(preprocessed_data)
     predictions = modelDiabet.predict(preprocessed_data)
-    print(predictions)
-    return {'diab':data,'predictions':predictions.item()}
+    json_list = data.dict()
+    return {'diab':data.dict() , 'prediction':predictions.tolist()}
 @app.post("/predict/csv")
 def return_predictions(file: UploadFile = File(...)):
     data = pd.read_json(file.file)
     preprocessed_data = clean_data(data)
-    print(preprocessed_data)
     predictions = modelDiabet.predict(preprocessed_data)
-    print(predictions)
     data['prediction']=predictions
     json_list = data.to_dict(orient='records')
     return {"diab":json_list}
-    # return data.to_json()
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8080)

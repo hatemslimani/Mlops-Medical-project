@@ -8,6 +8,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConnexionService } from './connexion.service';
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +23,8 @@ export class AppComponent {
   ngOnInit(): void {}
   getPred(value) {
     this.conService.getPred(value).subscribe((data: any) => {
-      this.router.navigate(['/predict', { data: JSON.stringify(data) }]);
+      (<any>$('#exampleModal2')).modal('hide');
+      this.router.navigate(['/predict/1', { data: JSON.stringify(data) }]);
     });
   }
 
@@ -35,6 +37,7 @@ export class AppComponent {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
       this.conService.getPredByCsv(formData).subscribe((data) => {
+        (<any>$('#exampleModal')).modal('hide');
         console.log(data);
         this.router.navigate(['/predict', { data: JSON.stringify(data) }]);
       });
