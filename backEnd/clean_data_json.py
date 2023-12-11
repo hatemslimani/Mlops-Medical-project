@@ -23,7 +23,8 @@ def clean_data_json(df):
         columns = {'Heart_Rate':'Heart Rate',
                    'Blood_Pressure':'Blood Pressure',
                    'Blood_Type':'Blood Type'}, inplace = True)
-    return data
+    dataCardio=pd.DataFrame([toCardioSet(df).dict()])
+    return data,dataCardio
 def toDiabetSet(data:Item):
     df = Diabete()
     df.Age =dt.date.today().year - data.DateNais.year
@@ -42,4 +43,20 @@ def toDiabetSet(data:Item):
     isSmoking={'No':1,'Yes':0}
     df.Smoking=isSmoking[data.Smoking]
     return df
-    
+def toCardioSet(data:Item):
+    df = Diabete()
+    df.age =dt.date.today().year - data.DateNais.year
+    print(dt.date.today().year - data.DateNais.year)
+    gender={'Male':1,'Female':0}
+    df.gender=gender[data.Gender]
+    df.height=data.Height
+    df.weight=data.Weight
+    df.ap_hi=data.ap_hi
+    df.ap_lo = data.ap_lo
+    df.active=data.active
+    df.alco=data.alco
+    df.gluc=data.gluc
+    df.cholesterol=data.Cholesterol
+    isSmoking={'No':1,'Yes':0}
+    df.smoke=isSmoking[data.Smoking]
+    return df

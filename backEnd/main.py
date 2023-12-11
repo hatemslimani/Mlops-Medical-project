@@ -16,9 +16,9 @@ os.environ["MLFLOW_TRACKING_PASSWORD"] = "f497730cfadcd6d476b9089d797bda3a8abcaa
 
 
 mlflow.set_tracking_uri('https://dagshub.com/hatemslimani2035/ML_OPS.mlflow')
-def getBestModel(id):
+def getBestModel(filename,modelname,id):
     modelId=0
-    with open("id.txt", 'r') as file:
+    with open(filename, 'r') as file:
         modelId = file.readline() 
         print(modelId)
         file.close
@@ -27,13 +27,13 @@ def getBestModel(id):
         experiment_ids=[id], filter_string="metrics.Precision_test <1")
     run_id = df_mlflow.loc[df_mlflow['metrics.Precision_test'].idxmax()]['run_id']
     if modelId!=0 and run_id==modelId:
-        modelDiabet = pickle.load(open("model.h5", 'rb'))
+        modelDiabet = pickle.load(open(modelname, 'rb'))
     else:
-        with open("id.txt", 'w') as file:
+        with open(filename, 'w') as file:
             file.write(run_id)
         logged_model = f'runs:/{run_id}/ML_models'
         modelDiabet = mlflow.pyfunc.load_model(logged_model)
-        pickle.dump(modelDiabet, open("model.h5", 'wb'))
+        pickle.dump(modelDiabet, open(modelname, 'wb'))
     return modelDiabet
 
 app = FastAPI()
@@ -46,21 +46,32 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-modelDiabet= getBestModel(1)
-# modelCardio= getBestModel(0)
+modelDiabet= getBestModel("id.txt","model.h5",1)
+modelCardio= getBestModel("id2.txt","modelCardio.h5",0)
+
+
+def read_file(file: UploadFile):
+    content_type = file.content_type
+    if "json" in content_type:
+        return pd.read_json(file.file)
+    elif "csv" in content_type:
+        return pd.read_csv(file.file)
+    else:
+        raise ValueError("Unsupported file format")
+
 
 @app.get("/")
 def read_root():
     return {"Hello": "to medical Classifaction"}
 @app.post("/predict")
 def predict(data:Item):
-    preprocessed_data = clean_data_json(data)
+    preprocessed_data,dfCardio = clean_data_json(data)
     predictions = modelDiabet.predict(preprocessed_data)
-    json_list = data.dict()
-    return {'diab':data.dict() , 'prediction':predictions.tolist()}
+    predictionsCardio = modelCardio.predict(dfCardio)
+    return {'diab':data.dict() , 'prediction':predictions.tolist(), 'cardio':data.dict() , 'predictionCardio':predictionsCardio.tolist()}
 @app.post("/predict/csv")
 def return_predictions(file: UploadFile = File(...)):
-    data = pd.read_json(file.file)
+    data = read_file(file)
     preprocessed_data = clean_data(data)
     predictions = modelDiabet.predict(preprocessed_data)
     data['prediction']=predictions

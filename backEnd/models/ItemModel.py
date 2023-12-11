@@ -14,3 +14,8 @@ class Item(BaseModel):
     Cholesterol: float =None
     Smoking: str =None
     DateNais: date=None
+    ap_hi: str =None
+    ap_lo: str =None
+    gluc: str =None
+    alco: str =None
+    active: str =None
