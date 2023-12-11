@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ConnexionService {
-  private uri: String = 'http://localhost:8000/';
+  private uri: String = 'http://20.56.18.178:8000/';
   // private uri: String = 'http://backend:8000/';
   constructor(private http: HttpClient) {}
   getPred(log) {
